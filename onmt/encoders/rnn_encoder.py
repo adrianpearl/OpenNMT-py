@@ -63,6 +63,9 @@ class RNNEncoder(EncoderBase):
     def forward(self, src, lengths=None):
         """See :func:`EncoderBase.forward()`"""
         self._check_args(src, lengths)
+        
+        print('input:')
+        print(src.shape)
 
         emb = self.embeddings(src)
         # s_len, batch, emb_dim = emb.size()
@@ -80,6 +83,14 @@ class RNNEncoder(EncoderBase):
 
         if self.use_bridge:
             encoder_final = self._bridge(encoder_final)
+        
+        print('encoder final:')
+        for e in encoder_final:
+        	print(e.shape)
+        print('memory bank:')
+        for m in memory_bank:
+        	print(m.shape)
+        print()
         return encoder_final, memory_bank, lengths
 
     def _initialize_bridge(self, rnn_type,

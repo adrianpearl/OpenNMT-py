@@ -69,7 +69,7 @@ def model_opts(parser):
               help='Data type of the model.')
 
     group.add('--encoder_type', '-encoder_type', type=str, default='rnn',
-              choices=['rnn', 'brnn', 'mean', 'transformer', 'cnn'],
+              choices=['rnn', 'brnn', 'mean', 'transformer', 'cnn', 'bert'],
               help="Type of encoder layer to use. Non-RNN layers "
                    "are experimental. Options are "
                    "[rnn|brnn|mean|transformer|cnn].")
@@ -179,7 +179,11 @@ def model_opts(parser):
     group.add('--loss_scale', '-loss_scale', type=float, default=0,
               help="For FP16 training, the static loss scale to use. If not "
                    "set, the loss scale is dynamically computed.")
-
+                   
+    # Bert vocab option
+    group = parser.add_argument_group('Bert- Vocab')
+    group.add('--bert_vocab', '-bert_vocab', default="",
+    		  help="Path to the vocab to initialize Bert")
 
 def preprocess_opts(parser):
     """ Pre-procesing options """
@@ -348,7 +352,7 @@ def train_opts(parser):
                    "Use 0 to not use initialization")
     group.add('--param_init_glorot', '-param_init_glorot', action='store_true',
               help="Init parameters with xavier_uniform. "
-                   "Required for transformer.")
+                   "Required for transfomer.")
 
     group.add('--train_from', '-train_from', default='', type=str,
               help="If training from a checkpoint then this is the "
