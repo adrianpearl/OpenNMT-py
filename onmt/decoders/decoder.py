@@ -360,8 +360,6 @@ class InputFeedRNNDecoder(RNNDecoderBase):
         input_feed_batch, _ = input_feed.size()
         _, tgt_batch, _ = tgt.size()
         
-        print(input_feed.size())
-        print(tgt.size())
         aeq(tgt_batch, input_feed_batch)
         # END Additional args check.
 

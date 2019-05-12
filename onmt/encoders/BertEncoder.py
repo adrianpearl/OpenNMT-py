@@ -14,7 +14,8 @@ class BertEncoder(EncoderBase):
 		#self.tokenizer = BertTokenizer.from_pretrained(bert_vocab)
 		self.BertModel = BertModel.from_pretrained('bert-base-uncased')
 		self.BertModel.eval()
-		#self.BertModel.to('cuda')
+		self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+		self.BertModel.to(self.device)
 			
 		
 	@classmethod
@@ -35,8 +36,8 @@ class BertEncoder(EncoderBase):
 		tokens_tensor = src[:,:,0].t()
 		segments_tensors = torch.zeros_like(tokens_tensor)
 				
-		#tokens_tensor = tokens_tensor.to('cuda')
-		#segments_tensors = segments_tensors.to('cuda')
+		tokens_tensor = tokens_tensor.to(self.device)
+		segments_tensors = segments_tensors.to(self.device)
 		
 		with torch.no_grad():
 			encoded_layers, _ = self.BertModel(tokens_tensor, segments_tensors)
